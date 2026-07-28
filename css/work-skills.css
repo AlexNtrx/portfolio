@@ -1,0 +1,608 @@
+/* PROJECT REEL
+   Native horizontal scroll, snap points, and a deliberate next-card peek. */
+.project-reel {
+  margin-inline: calc(var(--gutter) * -1);
+  overflow: hidden;
+}
+.project-reel-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--gutter) 0.75rem;
+}
+.project-counter {
+  margin: 0;
+  color: var(--accent);
+  font: 500 var(--label-size)/1.4 var(--mono);
+}
+.project-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+.project-control {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+.project-control:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.project-control:disabled {
+  border-color: var(--line);
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.project-reel-track {
+  display: flex;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-block: 0.5rem 1.5rem;
+  padding-inline: var(--gutter) var(--b2-end-space, var(--gutter));
+  scroll-padding-inline-start: var(--gutter);
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  touch-action: pan-x pan-y;
+}
+.project-reel-track::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.project-reel-track:focus-visible {
+  outline-offset: -4px;
+}
+.project-card {
+  position: relative;
+  flex: 0 0 min(78vw, 62rem);
+  min-width: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  filter: brightness(0.78);
+  opacity: 0.64;
+  transition:
+    filter 180ms ease,
+    opacity 180ms ease,
+    border-color 180ms ease;
+}
+.project-card[data-active="true"] {
+  border-color: var(--accent);
+  filter: none;
+  opacity: 1;
+}
+.project-card-activate {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.project-card-activate:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -5px;
+}
+.project-media {
+  min-height: 20rem;
+  margin: 0;
+  background: var(--surface-soft);
+}
+.project-media img {
+  width: 100%;
+  height: clamp(20rem, 40vw, 32rem);
+  object-fit: cover;
+}
+/* PROJECT DETAIL AND TECHNOLOGY DIAGRAM */
+.project-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(14rem, 1fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  padding: clamp(1.25rem, 3vw, 2.75rem) var(--gutter) 2.5rem;
+  transform: translateY(0);
+  transition:
+    opacity 250ms ease,
+    transform 250ms ease;
+}
+.project-detail h3 {
+  margin: 0.8rem 0 0.3rem;
+  font-size: clamp(1.5rem, 2.8vw, 2.6rem);
+  line-height: 1.05;
+}
+.project-detail.is-exiting {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  transition-duration: 180ms;
+}
+.project-detail.is-entering {
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition: none;
+}
+.project-type {
+  margin-bottom: 1rem;
+  color: var(--accent);
+  font: var(--label-size)/1.5 var(--mono);
+  text-transform: uppercase;
+}
+.project-purpose {
+  max-width: 34ch;
+  margin-bottom: 1rem;
+  color: var(--muted);
+  font-size: 1rem;
+}
+.project-note {
+  max-width: 38ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--small-copy-size);
+}
+.project-detail-secondary {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+.technology-visualization {
+  min-width: 0;
+}
+.technology-visualization-canvas {
+  min-height: 7rem;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+}
+.technology-visualization-canvas.is-exiting {
+  opacity: 0;
+  transform: translateY(-0.35rem);
+}
+.technology-visualization-canvas.is-entering {
+  opacity: 0;
+  transform: translateY(0.35rem);
+  transition: none;
+}
+.technology-diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 7rem;
+}
+.technology-connector {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  stroke-dasharray: 1 5;
+  animation: technology-line-draw 260ms ease-out both;
+}
+.technology-node {
+  animation: technology-node-in 180ms ease-out var(--technology-delay) both;
+  transform-origin: center;
+}
+.technology-node-logo {
+  overflow: visible;
+}
+.technology-node-logo--contrast {
+  filter: invert(1) grayscale(1) brightness(1.18);
+}
+.technology-node-fallback {
+  fill: var(--accent);
+  font: 600 7px var(--mono);
+}
+.technology-node-label {
+  fill: var(--muted);
+  font: 500 8px var(--mono);
+}
+@keyframes technology-line-draw {
+  from {
+    stroke-dashoffset: 18;
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+@keyframes technology-node-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.project-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 0.75rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--small-copy-size);
+}
+.project-meta dt {
+  color: var(--accent);
+  font: var(--label-size)/1.4 var(--mono);
+  text-transform: uppercase;
+}
+.project-meta dd {
+  margin: 0;
+}
+/* PROJECT ACTIONS
+   Controls the Demo and GitHub button layout. */
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  margin: 0.2rem 90px 0;
+  font: 500 var(--label-size)/1.4 var(--mono);
+  text-transform: uppercase;
+}
+.project-links a,
+.project-links button {
+  display: inline-flex;
+  box-sizing: border-box;
+  height: 2.6rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-decoration: none;
+}
+.project-links a[data-detail-action="demoUrl"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #121411;
+}
+.project-links a:hover {
+  border-color: var(--accent-hover);
+  color: var(--accent-hover);
+}
+.project-links a[data-detail-action="demoUrl"]:hover {
+  background: var(--accent-hover);
+  color: #121411;
+}
+.project-links button:disabled {
+  border-color: var(--line);
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+.project-action-icon {
+  display: block;
+  flex: 0 0 auto;
+  width: 1.125rem;
+  height: 1.125rem;
+  overflow: visible;
+}
+.project-action-icon--github {
+  filter: invert(1) grayscale(1) brightness(1.15);
+}
+.project-links button[data-detail-action="githubUrl"]:disabled {
+  border-color: var(--line-strong);
+  color: var(--text);
+  opacity: 1;
+}
+
+/* SKILLS HIERARCHY
+   Primary technical groups lead; supporting tools remain compact below. */
+.capability-list {
+  display: grid;
+  grid-template-areas:
+    "foundations services"
+    "data data"
+    "creative creative";
+  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+  gap: clamp(1.5rem, 2.8vw, 2.35rem) clamp(1.5rem, 3.2vw, 3.25rem);
+  margin: 0;
+  padding: 0;
+}
+.capability-group {
+  align-self: start;
+  min-width: 0;
+  padding: 0;
+  border-top: 1px solid var(--line-strong);
+}
+.capability-group[data-capability-group="foundations"] {
+  grid-area: foundations;
+}
+.capability-group[data-capability-group="services"] {
+  grid-area: services;
+}
+.capability-group[data-capability-group="data"] {
+  grid-area: data;
+}
+.capability-group[data-capability-group="creative"] {
+  grid-area: creative;
+  margin-top: 0.35rem;
+  border-top-color: var(--line);
+}
+.capability-group h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  margin: 0;
+  padding-top: 0.7rem;
+  font-size: clamp(1rem, 1.15vw, 1.15rem);
+}
+.capability-number {
+  flex: 0 0 auto;
+}
+.capability-cluster {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+}
+/* Skill relationship lines are positioned dynamically by js/capabilities.js. */
+.capability-connectors {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.capability-connectors polyline {
+  fill: none;
+  stroke: color-mix(in srgb, var(--accent) 35%, var(--line-strong));
+  stroke-width: 1;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  opacity: 0.72;
+}
+.skill-list {
+  display: grid;
+  position: relative;
+  z-index: 1;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-areas:
+    "html css javascript react nextjs"
+    ". bootstrap tailwind . .";
+  gap: 0.8rem 0.45rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.capability-group[data-capability-group="services"] .skill-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "nodejs express"
+    "php laravel"
+    "supabase supabase";
+  gap: 0.08rem 0.68rem;
+}
+.capability-group[data-capability-group="services"] .skill-node,
+.capability-group[data-capability-group="services"] .skill-node-content {
+  min-height: 2.25rem;
+}
+.capability-group[data-capability-group="data"] .skill-list {
+  width: min(68%, 50rem);
+  max-width: 100%;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-areas:
+    "postgresql mongodb prisma github postman";
+  gap: 0 0.75rem;
+}
+.capability-group[data-capability-group="creative"] .skill-list {
+  display: grid;
+  width: min(64%, 46rem);
+  max-width: 100%;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-areas: none;
+  gap: 0.15rem 0.5rem;
+  margin-top: 0.45rem;
+}
+.capability-group[data-capability-group="creative"] .skill-node {
+  grid-area: auto !important;
+  min-height: 2rem;
+}
+.capability-group[data-capability-group="creative"] h3 {
+  gap: 0.55rem;
+  padding-top: 0.55rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.capability-group[data-capability-group="creative"] .capability-number {
+  color: color-mix(in srgb, var(--accent) 72%, var(--muted));
+}
+.capability-group[data-capability-group="creative"] .skill-node-content {
+  min-height: 2rem;
+  align-items: flex-start;
+  gap: 0.35rem;
+  padding: 0.1rem 0.15rem;
+}
+.capability-group[data-capability-group="creative"] .skill-mark {
+  flex-basis: 1.45rem;
+  width: 1.45rem;
+  height: 1.45rem;
+}
+.capability-group[data-capability-group="creative"] .skill-logo[data-logo-kind="wordmark"],
+.capability-group[data-capability-group="creative"] .skill-logo[data-logo-kind="mark"],
+.capability-group[data-capability-group="creative"] .skill-logo[data-logo-kind="office"] {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+.capability-group[data-capability-group="creative"] .skill-name {
+  color: var(--muted);
+  font-size: 0.69rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.capability-group[data-capability-group="services"] .skill-node[data-skill-id="supabase"] {
+  justify-self: start;
+  margin-top: 0;
+}
+.skill-node {
+  min-width: 0;
+  min-height: 2.55rem;
+  outline: none;
+}
+.skill-node-content {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 2.55rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0.25rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+.skill-mark {
+  display: grid;
+  flex: 0 0 2rem;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+}
+.skill-logo {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.skill-logo[data-logo-kind="wordmark"] {
+  width: 2rem;
+  height: 1.25rem;
+}
+.skill-logo[data-logo-kind="mark"] {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.skill-logo[data-logo-kind="office"] {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+.skill-node[data-skill-id="github"] .skill-mark,
+.skill-node[data-skill-id="nextjs"] .skill-mark,
+.skill-node[data-skill-id="express"] .skill-mark,
+.skill-node[data-skill-id="prisma"] .skill-mark {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-inline: 0.125rem;
+}
+.skill-node[data-skill-id="github"] .skill-logo[data-logo-kind="wordmark"],
+.skill-node[data-skill-id="nextjs"] .skill-logo[data-logo-kind="wordmark"],
+.skill-node[data-skill-id="express"] .skill-logo[data-logo-kind="wordmark"],
+.skill-node[data-skill-id="prisma"] .skill-logo[data-logo-kind="wordmark"] {
+  width: 1.65rem;
+  height: 1.06rem;
+  filter: brightness(0) invert(0.92);
+}
+.skill-node[data-skill-id="nodejs"] .skill-logo[data-logo-kind="wordmark"],
+.skill-node[data-skill-id="supabase"] .skill-logo[data-logo-kind="wordmark"] {
+  width: 1.82rem;
+  height: 1.14rem;
+}
+.skill-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.79rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.skill-node:hover .skill-node-content,
+.skill-node:focus-visible .skill-node-content {
+  border-color: var(--line-strong);
+  background: color-mix(in srgb, var(--surface-soft) 72%, transparent);
+  color: var(--text);
+}
+.skill-node:focus-visible .skill-node-content {
+  border-color: var(--focus);
+}
+.capability-connectors polyline.is-related {
+  stroke: var(--accent);
+  stroke-width: 1.35;
+  opacity: 1;
+}
+/* TABLET SKILLS REFLOW */
+@media (max-width: 52rem) {
+  .capability-list {
+    grid-template-areas:
+      "foundations"
+      "services"
+      "data"
+      "creative";
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.6rem;
+  }
+  .capability-group[data-capability-group="creative"] .skill-list {
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .capability-group[data-capability-group="data"] .skill-list {
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      "postgresql mongodb prisma"
+      "github postman .";
+  }
+  .capability-group[data-capability-group="foundations"] .skill-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas: none;
+  }
+  .capability-group[data-capability-group="foundations"] .skill-node {
+    grid-area: auto !important;
+  }
+  .capability-connectors polyline:nth-child(n + 3) {
+    display: none;
+  }
+}
+/* Skills reveal keyframes; only used when reduced motion is not requested. */
+@keyframes capability-connector-draw {
+  to {
+    opacity: 0.72;
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes capability-node-enter {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes capability-node-lock {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  35% {
+    transform: translateX(0.8px);
+  }
+  68% {
+    transform: translateX(-0.55px);
+  }
+}
+@media (max-width: 52rem) and (prefers-reduced-motion: no-preference) {
+  html.scroll-motion-enabled [data-reveal="capability-cards"].is-revealed .skill-node-content {
+    animation: capability-node-enter 190ms var(--motion-ease-enter) calc(var(--group-delay) + 315ms + var(--node-delay)) both;
+  }
+}

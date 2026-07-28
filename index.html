@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nithitorn Kaosa-ard | Junior-ohjelmistokehittäjä</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="image" href="assets/kuva/alex.png" />
+    <link rel="preload" as="image" href="assets/kuva/alexai.png" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/work-skills.css" />
+    <link rel="stylesheet" href="css/background-contact.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+  <body>
+    <!-- Accessibility shortcut: lets keyboard users bypass repeated navigation. -->
+    <a class="skip-link" href="#content">Siirry sisältöön</a>
+
+    <!-- Site Header and Primary Navigation -->
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="Nithitorn Kaosa-ard, etusivu"
+        >N. KAOSA-ARD</a
+      >
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-controls="primary-navigation"
+        aria-expanded="false"
+        hidden
+        data-nav-toggle
+      >
+        <span data-nav-toggle-label>Valikko</span>
+        <span class="nav-toggle-icon" aria-hidden="true"
+          ><span></span><span></span
+        ></span>
+      </button>
+      <nav
+        id="primary-navigation"
+        aria-label="Päänavigointi"
+        data-primary-navigation
+      >
+        <ul class="site-nav">
+          <li><a href="#work">Työnäytteet</a></li>
+          <li><a href="#capabilities">Osaaminen</a></li>
+          <li><a href="#background">Tausta</a></li>
+          <li><a href="#contact">Yhteystiedot</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="content">
+      <!-- Hero: introduction, primary calls to action, and profile toggle. -->
+      <section class="intro" id="top" aria-labelledby="developer-name">
+        <div class="intro-copy">
+          <div class="intro-name">
+            <p class="eyebrow">
+              Junior-ohjelmistokehittäjä · Savonlinna, Suomi
+            </p>
+            <h1 id="developer-name">Nithitorn<br />Kaosa-ard</h1>
+          </div>
+          <div class="intro-content">
+            <p
+              class="hero-typing"
+              aria-label="Junior-ohjelmistokehittäjä, verkkokehitys, käyttöliittymäkehitys, käyttöliittymä- ja verkkosuunnittelu, IT-opiskelija"
+            >
+              <span class="hero-typing-prefix" aria-hidden="true">&gt;</span>
+              <span
+                class="hero-typing-output"
+                data-hero-typing-output
+                aria-hidden="true"
+                >Verkkokehitys</span
+              ><span class="hero-typing-caret" aria-hidden="true"></span>
+            </p>
+            <p class="intro-lede">
+              Junior-ohjelmistokehittäjä ja IT-opiskelija Savonlinnasta.
+              Keskityn web-kehitykseen ja käyttöliittymiin.
+            </p>
+            <div class="intro-actions">
+              <a class="button button-primary" href="#work">Katso projektit</a>
+              <a class="button" href="#contact">Ota yhteyttä</a>
+            </div>
+          </div>
+        </div>
+        <figure class="profile-image">
+          <button
+            class="profile-toggle"
+            type="button"
+            aria-label="Näytä Nithitorn Kaosa-ardin AI-avatar"
+            aria-pressed="false"
+            title="Näytä AI-avatar"
+            data-profile-toggle
+          >
+            <span class="profile-card" aria-hidden="true">
+              <img
+                class="profile-layer profile-layer-real"
+                src="assets/kuva/alex.png"
+                alt=""
+                width="500"
+                height="500"
+                decoding="async"
+              />
+              <img
+                class="profile-layer profile-layer-avatar"
+                src="assets/kuva/alexai.png"
+                alt=""
+                width="500"
+                height="500"
+                decoding="async"
+              />
+            </span>
+            <span class="sr-only">Nithitorn Kaosa-ardin muotokuva</span>
+          </button>
+        </figure>
+      </section>
+
+      <!-- Work: project reel is rendered and updated by js/projects.js. -->
+      <section class="work-section" id="work" aria-labelledby="work-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-reveal data-reveal-step="0">
+              01 / työnäytteet
+            </p>
+            <h2 id="work-heading" data-reveal data-reveal-step="1">
+              Projektit
+            </h2>
+          </div>
+          <p class="section-summary" data-reveal data-reveal-step="1">
+            Projektit, teknologiat ja saatavilla olevat demot.
+          </p>
+        </div>
+
+        <div class="project-reel" data-project-reel aria-label="Projektit">
+          <div class="project-reel-toolbar" data-reveal data-reveal-step="2">
+            <p class="project-counter" data-project-counter aria-hidden="true">
+              01 / 04
+            </p>
+            <div class="project-controls" aria-label="Projektien selaus">
+              <button
+                class="project-control"
+                type="button"
+                data-project-previous
+                aria-label="Edellinen projekti"
+              >
+                ←
+              </button>
+              <button
+                class="project-control"
+                type="button"
+                data-project-next
+                aria-label="Seuraava projekti"
+              >
+                →
+              </button>
+            </div>
+          </div>
+          <div
+            class="project-reel-media-reveal"
+            data-reveal="work-media"
+            data-reveal-step="3"
+          >
+            <div
+              class="project-reel-track"
+              data-project-track
+              tabindex="0"
+              aria-describedby="project-reel-help"
+            ></div>
+          </div>
+          <article
+            class="project-detail"
+            data-project-detail
+            aria-labelledby="project-detail-title"
+          >
+            <div class="project-detail-primary">
+              <p class="project-number" data-project-detail-label></p>
+              <h3 id="project-detail-title" data-project-detail-title></h3>
+              <p class="project-type" data-project-detail-type></p>
+              <p class="project-purpose" data-project-detail-description></p>
+              <p
+                class="project-note"
+                data-project-detail-contribution
+                hidden
+              ></p>
+            </div>
+            <div class="project-detail-secondary">
+              <div
+                class="technology-visualization"
+                data-project-detail-technologies
+                aria-label="Teknologiat"
+              >
+                <div
+                  class="technology-visualization-canvas"
+                  data-technology-canvas
+                ></div>
+                <ul class="sr-only" data-technology-text-list></ul>
+              </div>
+              <dl class="project-meta" data-project-detail-meta></dl>
+              <p class="project-links" data-project-detail-actions></p>
+            </div>
+          </article>
+          <p class="sr-only" id="project-reel-help">
+            Selaa projekteja vaakasuunnassa hiirellä, kosketuksella tai
+            nuolinäppäimillä. Demo-linkit avautuvat uuteen välilehteen.
+          </p>
+          <p
+            class="sr-only"
+            data-project-status
+            aria-live="polite"
+            aria-atomic="true"
+          ></p>
+        </div>
+      </section>
+
+      <!-- Skills: groups, icons, and optional connectors are rendered by js/capabilities.js. -->
+      <section
+        class="capabilities-section"
+        id="capabilities"
+        aria-labelledby="capabilities-heading"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-reveal data-reveal-step="0">
+              02 / osaaminen
+            </p>
+            <h2 id="capabilities-heading" data-reveal data-reveal-step="1">
+              Osaaminen käytännössä.
+            </h2>
+          </div>
+          <p class="section-summary" data-reveal data-reveal-step="1">
+            Osaaminen on esitetty tiiviisti työn rinnalla, jotta rekrytoija voi
+            skannata sen nopeasti.
+          </p>
+        </div>
+        <div
+          class="capability-list"
+          data-capability-list
+          data-reveal="capability-cards"
+          data-reveal-step="2"
+        ></div>
+      </section>
+
+      <!-- Background: education and experience timeline. -->
+      <section
+        class="background-section"
+        id="background"
+        aria-labelledby="background-heading"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-reveal data-reveal-step="0">
+              03 / tausta
+            </p>
+            <h2 id="background-heading" data-reveal data-reveal-step="1">
+              Koulutus ja kokemus
+            </h2>
+          </div>
+          <p class="section-summary" data-reveal data-reveal-step="1">
+            Koulutus ja käytännön kokemus.
+          </p>
+        </div>
+        <div class="timeline-grid" data-reveal="timeline" data-reveal-step="2">
+          <section aria-labelledby="education-heading">
+            <h3 id="education-heading">Koulutus</h3>
+            <ol class="timeline-list">
+              <li>
+                <p class="timeline-meta">Käynnissä</p>
+                <h4>Samiedu</h4>
+                <p>
+                  Tieto- ja viestintätekniikka<br />
+                  Ohjelmistokehitys
+                </p>
+                <p>
+                  Painopisteet: verkkokehitys, tietokannat ja
+                  ohjelmistokehityksen käytännöt.
+                </p>
+              </li>
+            </ol>
+          </section>
+          <section aria-labelledby="experience-heading">
+            <h3 id="experience-heading">Keskeinen kokemus</h3>
+            <ol class="timeline-list">
+              <li>
+                <p class="timeline-meta">2024</p>
+                <h4>Verkkoprojekti — Nana’s Thai Food</h4>
+                <p>Ravintolasivuston suunnittelu ja toteutus.</p>
+              </li>
+              <li>
+                <p class="timeline-meta">2022</p>
+                <h4>Työharjoittelu — Digipaja</h4>
+                <p>Visuaalinen tuotanto ja Photoshop.</p>
+              </li>
+            </ol>
+          </section>
+        </div>
+      </section>
+
+      <!-- Contact: client-side form feedback, direct details, and decorative chibi video. -->
+      <section
+        class="contact-section"
+        id="contact"
+        aria-labelledby="contact-heading"
+      >
+        <p class="eyebrow" data-reveal data-reveal-step="0">04 / yhteystiedot</p>
+        <h2 id="contact-heading" data-reveal data-reveal-step="1">
+          Ota yhteyttä.
+        </h2>
+        <p class="contact-intro" data-reveal data-reveal-step="2">
+          Ota yhteyttä sähköpostitse tai puhelimitse.
+        </p>
+        <div class="contact-layout">
+          <div class="contact-form-shell" data-reveal data-reveal-step="2">
+            <form class="contact-form" data-contact-form>
+              <div class="contact-field">
+                <label for="contact-name">Nimi</label>
+                <input id="contact-name" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div class="contact-field">
+                <label for="contact-email">Sähköposti</label>
+                <input id="contact-email" name="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="contact-field">
+                <label for="contact-message">Viesti</label>
+                <textarea id="contact-message" name="message" rows="5" required></textarea>
+              </div>
+              <div class="contact-actions">
+                <button class="contact-submit" type="submit">Lähetä viesti</button>
+                <p class="contact-form-status" data-contact-form-status role="status" aria-live="polite"></p>
+                <figure class="contact-avatar" data-reveal="contact-avatar" data-reveal-step="3" aria-hidden="true">
+                  <video
+                    muted
+                    playsinline
+                    preload="metadata"
+                    disablepictureinpicture
+                    draggable="false"
+                    aria-hidden="true"
+                  >
+                    <source src="assets/video/chibi.webm" type="video/webm" />
+                  </video>
+                </figure>
+              </div>
+            </form>
+          </div>
+        <dl class="contact-list" data-reveal data-reveal-step="3">
+          <div>
+            <dt>Sähköposti</dt>
+            <dd>
+              <a href="mailto:alextunder2561@gmail.com"
+                >alextunder2561@gmail.com</a
+              >
+            </dd>
+          </div>
+          <div>
+            <dt>Puhelin</dt>
+            <dd><a href="tel:+358413277645">+358 413277645</a></dd>
+          </div>
+          <div>
+            <dt>Sijainti</dt>
+            <dd>Savonlinna, Suomi</dd>
+          </div>
+          <div>
+            <dt>Kielet</dt>
+            <dd>thai · suomi · englanti</dd>
+          </div>
+        </dl>
+        </div>
+      </section>
+    </main>
+
+    <!-- Application entry point: initializes independent page features. -->
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
