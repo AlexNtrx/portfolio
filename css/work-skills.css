@@ -248,7 +248,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 3rem;
-  margin: 0.2rem 90px 0;
+  margin: 0.5rem 0 0;
   font: 500 var(--label-size)/1.4 var(--mono);
   text-transform: uppercase;
 }
@@ -296,22 +296,13 @@
 .project-action-icon--github {
   filter: invert(1) grayscale(1) brightness(1.15);
 }
-.project-links button[data-detail-action="githubUrl"]:disabled {
-  border-color: var(--line-strong);
-  color: var(--text);
-  opacity: 1;
-}
 
 /* SKILLS HIERARCHY
-   Primary technical groups lead; supporting tools remain compact below. */
+   Clean 2x2 symmetrical grid of technical domains. */
 .capability-list {
   display: grid;
-  grid-template-areas:
-    "foundations services"
-    "data data"
-    "creative creative";
-  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
-  gap: clamp(1.5rem, 2.8vw, 2.35rem) clamp(1.5rem, 3.2vw, 3.25rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(3rem, 4.5vw, 4.5rem) clamp(2.5rem, 4vw, 4rem);
   margin: 0;
   padding: 0;
 }
@@ -321,163 +312,69 @@
   padding: 0;
   border-top: 1px solid var(--line-strong);
 }
-.capability-group[data-capability-group="foundations"] {
-  grid-area: foundations;
-}
-.capability-group[data-capability-group="services"] {
-  grid-area: services;
-}
-.capability-group[data-capability-group="data"] {
-  grid-area: data;
-}
-.capability-group[data-capability-group="creative"] {
-  grid-area: creative;
-  margin-top: 0.35rem;
-  border-top-color: var(--line);
-}
 .capability-group h3 {
   display: flex;
   align-items: baseline;
-  gap: 0.7rem;
+  gap: 0.85rem;
   margin: 0;
-  padding-top: 0.7rem;
-  font-size: clamp(1rem, 1.15vw, 1.15rem);
+  padding-top: 1.15rem;
+  font-size: clamp(1.05rem, 1.2vw, 1.2rem);
+  font-weight: 700;
+  color: var(--text);
 }
 .capability-number {
   flex: 0 0 auto;
-}
-.capability-cluster {
-  position: relative;
-  isolation: isolate;
-  min-width: 0;
-}
-/* Skill relationship lines are positioned dynamically by js/capabilities.js. */
-.capability-connectors {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-}
-.capability-connectors polyline {
-  fill: none;
-  stroke: color-mix(in srgb, var(--accent) 35%, var(--line-strong));
-  stroke-width: 1;
-  stroke-linecap: square;
-  stroke-linejoin: miter;
-  opacity: 0.72;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--accent);
 }
 .skill-list {
-  display: grid;
-  position: relative;
-  z-index: 1;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-template-areas:
-    "html css javascript react nextjs"
-    ". bootstrap tailwind . .";
-  gap: 0.8rem 0.45rem;
-  margin: 0.9rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.95rem 1rem;
+  margin: 1.6rem 0 0;
   padding: 0;
   list-style: none;
 }
-.capability-group[data-capability-group="services"] .skill-list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-areas:
-    "nodejs express"
-    "php laravel"
-    "supabase supabase";
-  gap: 0.08rem 0.68rem;
-}
-.capability-group[data-capability-group="services"] .skill-node,
-.capability-group[data-capability-group="services"] .skill-node-content {
-  min-height: 2.25rem;
-}
-.capability-group[data-capability-group="data"] .skill-list {
-  width: min(68%, 50rem);
-  max-width: 100%;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-template-areas:
-    "postgresql mongodb prisma github postman";
-  gap: 0 0.75rem;
-}
-.capability-group[data-capability-group="creative"] .skill-list {
-  display: grid;
-  width: min(64%, 46rem);
-  max-width: 100%;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-template-areas: none;
-  gap: 0.15rem 0.5rem;
-  margin-top: 0.45rem;
-}
-.capability-group[data-capability-group="creative"] .skill-node {
-  grid-area: auto !important;
-  min-height: 2rem;
-}
-.capability-group[data-capability-group="creative"] h3 {
-  gap: 0.55rem;
-  padding-top: 0.55rem;
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-.capability-group[data-capability-group="creative"] .capability-number {
-  color: color-mix(in srgb, var(--accent) 72%, var(--muted));
-}
-.capability-group[data-capability-group="creative"] .skill-node-content {
-  min-height: 2rem;
-  align-items: flex-start;
-  gap: 0.35rem;
-  padding: 0.1rem 0.15rem;
-}
-.capability-group[data-capability-group="creative"] .skill-mark {
-  flex-basis: 1.45rem;
-  width: 1.45rem;
-  height: 1.45rem;
-}
-.capability-group[data-capability-group="creative"] .skill-logo[data-logo-kind="wordmark"],
-.capability-group[data-capability-group="creative"] .skill-logo[data-logo-kind="mark"],
-.capability-group[data-capability-group="creative"] .skill-logo[data-logo-kind="office"] {
-  width: 1.3rem;
-  height: 1.3rem;
-}
-.capability-group[data-capability-group="creative"] .skill-name {
-  color: var(--muted);
-  font-size: 0.69rem;
-  font-weight: 500;
-  line-height: 1.2;
-}
-.capability-group[data-capability-group="services"] .skill-node[data-skill-id="supabase"] {
-  justify-self: start;
-  margin-top: 0;
-}
 .skill-node {
   min-width: 0;
-  min-height: 2.55rem;
   outline: none;
 }
 .skill-node-content {
   display: inline-flex;
-  width: fit-content;
-  max-width: 100%;
-  min-height: 2.55rem;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.2rem 0.25rem;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--muted);
+  gap: 0.75rem;
+  padding: 0.65rem 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(29, 33, 29, 0.6);
+  color: var(--text);
+  cursor: default;
   transition:
     border-color 160ms ease,
     background-color 160ms ease,
-    color 160ms ease;
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+.skill-node:hover .skill-node-content,
+.skill-node:focus-visible .skill-node-content {
+  border-color: var(--accent);
+  background: rgba(227, 184, 66, 0.08);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+.skill-node:focus-visible .skill-node-content {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
 }
 .skill-mark {
-  display: grid;
-  flex: 0 0 2rem;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 1.5rem;
 }
 .skill-logo {
   display: block;
@@ -486,90 +383,38 @@
   object-fit: contain;
 }
 .skill-logo[data-logo-kind="wordmark"] {
-  width: 2rem;
+  width: 1.5rem;
   height: 1.25rem;
 }
 .skill-logo[data-logo-kind="mark"] {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.35rem;
+  height: 1.35rem;
 }
-.skill-logo[data-logo-kind="office"] {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-.skill-node[data-skill-id="github"] .skill-mark,
-.skill-node[data-skill-id="nextjs"] .skill-mark,
-.skill-node[data-skill-id="express"] .skill-mark,
-.skill-node[data-skill-id="prisma"] .skill-mark {
-  width: 1.75rem;
-  height: 1.75rem;
-  margin-inline: 0.125rem;
-}
-.skill-node[data-skill-id="github"] .skill-logo[data-logo-kind="wordmark"],
-.skill-node[data-skill-id="nextjs"] .skill-logo[data-logo-kind="wordmark"],
-.skill-node[data-skill-id="express"] .skill-logo[data-logo-kind="wordmark"],
-.skill-node[data-skill-id="prisma"] .skill-logo[data-logo-kind="wordmark"] {
-  width: 1.65rem;
-  height: 1.06rem;
+.skill-node[data-skill-id="github"] .skill-logo,
+.skill-node[data-skill-id="nextjs"] .skill-logo,
+.skill-node[data-skill-id="express"] .skill-logo,
+.skill-node[data-skill-id="prisma"] .skill-logo {
   filter: brightness(0) invert(0.92);
 }
-.skill-node[data-skill-id="nodejs"] .skill-logo[data-logo-kind="wordmark"],
-.skill-node[data-skill-id="supabase"] .skill-logo[data-logo-kind="wordmark"] {
-  width: 1.82rem;
-  height: 1.14rem;
-}
 .skill-name {
-  min-width: 0;
-  overflow-wrap: anywhere;
-  font-size: 0.79rem;
+  font-family: var(--mono);
+  font-size: 0.86rem;
   font-weight: 600;
-  line-height: 1.25;
-}
-.skill-node:hover .skill-node-content,
-.skill-node:focus-visible .skill-node-content {
-  border-color: var(--line-strong);
-  background: color-mix(in srgb, var(--surface-soft) 72%, transparent);
-  color: var(--text);
-}
-.skill-node:focus-visible .skill-node-content {
-  border-color: var(--focus);
-}
-.capability-connectors polyline.is-related {
-  stroke: var(--accent);
-  stroke-width: 1.35;
-  opacity: 1;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
 }
 /* TABLET SKILLS REFLOW */
 @media (max-width: 52rem) {
   .capability-list {
-    grid-template-areas:
-      "foundations"
-      "services"
-      "data"
-      "creative";
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.6rem;
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
-  .capability-group[data-capability-group="creative"] .skill-list {
-    width: 100%;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .skill-list {
+    gap: 0.75rem 0.85rem;
+    margin-top: 1.25rem;
   }
-  .capability-group[data-capability-group="data"] .skill-list {
-    width: 100%;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-areas:
-      "postgresql mongodb prisma"
-      "github postman .";
-  }
-  .capability-group[data-capability-group="foundations"] .skill-list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-areas: none;
-  }
-  .capability-group[data-capability-group="foundations"] .skill-node {
-    grid-area: auto !important;
-  }
-  .capability-connectors polyline:nth-child(n + 3) {
-    display: none;
+  .skill-node-content {
+    padding: 0.55rem 0.95rem;
   }
 }
 /* Skills reveal keyframes; only used when reduced motion is not requested. */

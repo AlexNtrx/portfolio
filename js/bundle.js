@@ -1,4 +1,393 @@
-import { prefersReducedMotion, svgNamespace } from "./utils.js";
+(() => {
+'use strict';
+// Shared accessibility preference used to disable optional motion.
+const prefersReducedMotion = () =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Shared namespace required when JavaScript creates SVG elements.
+const svgNamespace = "http://www.w3.org/2000/svg";
+
+
+// HERO TYPING
+// Cycles through role descriptions only when the visitor allows motion.
+const setupHeroTyping = () => {
+  const output = document.querySelector("[data-hero-typing-output]");
+  if (!output || prefersReducedMotion()) return;
+
+  const phrases = [
+    "Verkkokehitys",
+    "Käyttöliittymäkehitys",
+    "Käyttöliittymä- ja verkkosuunnittelu",
+    "IT-opiskelija",
+    "Junior-ohjelmistokehittäjä",
+  ];
+  const typingDelay = 60;
+  const holdDelay = 1800;
+  const deletingDelay = 35;
+  const phraseDelay = 250;
+  const startDelay = 1000;
+  let phraseIndex = 0;
+  let characterIndex = 0;
+  let deleting = false;
+
+  output.textContent = "";
+
+  // Advance one character per call, switching between typing and deletion states.
+  const tick = () => {
+    const phrase = phrases[phraseIndex];
+
+    if (deleting) {
+      characterIndex -= 1;
+      output.textContent = phrase.slice(0, characterIndex);
+      if (characterIndex === 0) {
+        deleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        window.setTimeout(tick, phraseDelay);
+        return;
+      }
+      window.setTimeout(tick, deletingDelay);
+      return;
+    }
+
+    characterIndex += 1;
+    output.textContent = phrase.slice(0, characterIndex);
+    if (characterIndex === phrase.length) {
+      deleting = true;
+      window.setTimeout(tick, holdDelay);
+      return;
+    }
+    window.setTimeout(tick, typingDelay);
+  };
+
+  window.setTimeout(tick, startDelay);
+};
+
+
+// SCROLL REVEALS
+// Reveals each marked element once when it enters the viewport.
+const setupScrollMotion = () => {
+  if (prefersReducedMotion() || !("IntersectionObserver" in window)) return;
+
+  const targets = [...document.querySelectorAll("[data-reveal]")];
+  if (!targets.length) return;
+
+  document.documentElement.classList.add("scroll-motion-enabled");
+
+  // Unobserve revealed elements to prevent repeated entrance animations.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-revealed");
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.16,
+      rootMargin: "0px 0px -12% 0px",
+    },
+  );
+
+  targets.forEach((target) => observer.observe(target));
+};
+
+
+// Public initializers called by main.js.
+const initHeroAnimation = setupHeroTyping;
+const initScrollAnimations = setupScrollMotion;
+
+// SKILLS DATA
+// Categorized into 4 clean domains: Frontend, Backend, Data/DevTools, Design.
+const capabilityGroups = [
+  {
+    id: 'foundations',
+    title: 'Verkkokehitys ja käyttöliittymät',
+    skills: [
+      ['html', 'HTML', 'html5-original-wordmark.svg', 'wordmark'],
+      ['css', 'CSS', 'css3-original-wordmark.svg', 'wordmark'],
+      ['javascript', 'JavaScript', 'javascript-original.svg', 'mark'],
+      ['react', 'React', 'react-original-wordmark.svg', 'wordmark'],
+      ['nextjs', 'Next.js', 'nextjs-original-wordmark.svg', 'wordmark'],
+      ['tailwind', 'Tailwind CSS', 'tailwindcss-original-wordmark.svg', 'wordmark'],
+      ['bootstrap', 'Bootstrap', 'bootstrap-original-wordmark.svg', 'wordmark']
+    ]
+  },
+  {
+    id: 'services',
+    title: 'Ohjelmistokehykset ja palvelut',
+    skills: [
+      ['nodejs', 'Node.js', 'nodejs-original-wordmark.svg', 'wordmark'],
+      ['express', 'Express', 'express-original-wordmark.svg', 'wordmark'],
+      ['php', 'PHP', 'php-original.svg', 'wordmark'],
+      ['laravel', 'Laravel', 'laravel-original-wordmark.svg', 'wordmark'],
+      ['supabase', 'Supabase', 'supabase-original-wordmark.svg', 'wordmark']
+    ]
+  },
+  {
+    id: 'data',
+    title: 'Data ja kehitystyökalut',
+    skills: [
+      ['postgresql', 'PostgreSQL', 'postgresql-original-wordmark.svg', 'wordmark'],
+      ['mongodb', 'MongoDB', 'mongodb-original-wordmark.svg', 'wordmark'],
+      ['prisma', 'Prisma', 'prisma-original-wordmark.svg', 'wordmark'],
+      ['github', 'GitHub', 'github-original-wordmark.svg', 'wordmark'],
+      ['postman', 'Postman', 'postman-original-wordmark.svg', 'wordmark']
+    ]
+  },
+  {
+    id: 'creative',
+    title: 'Muotoilu ja työkalut',
+    skills: [
+      ['figma', 'Figma', 'figma-original.svg', 'mark'],
+      ['photoshop', 'Adobe Photoshop', 'photoshop-original.svg', 'mark'],
+      ['canva', 'Canva', 'canva-original.svg', 'mark']
+    ]
+  }
+];
+
+// SKILLS RENDERER
+// Creates accessible skill groups with modern badge-style items.
+const renderCapabilities = () => {
+  const list = document.querySelector('[data-capability-list]');
+  if (!list) return;
+
+  list.replaceChildren(...capabilityGroups.map((group, groupIndex) => {
+    const section = document.createElement('section');
+    section.className = 'capability-group';
+    section.dataset.capabilityGroup = group.id;
+    section.style.setProperty('--group-delay', `${groupIndex * 55}ms`);
+    section.setAttribute('aria-labelledby', `capability-group-${groupIndex + 1}`);
+
+    const heading = document.createElement('h3');
+    heading.id = `capability-group-${groupIndex + 1}`;
+    heading.append(document.createTextNode(group.title));
+
+    const skills = document.createElement('ul');
+    skills.className = 'skill-list';
+    skills.append(...group.skills.map(([id, name, icon, kind], skillIndex) => {
+      const item = document.createElement('li');
+      item.className = 'skill-node';
+      item.dataset.skillId = id;
+      item.tabIndex = 0;
+      item.style.setProperty('--node-delay', `${skillIndex * 35}ms`);
+      item.setAttribute('aria-label', name);
+
+      const content = document.createElement('span');
+      content.className = 'skill-node-content';
+
+      const mark = document.createElement('span');
+      mark.className = 'skill-mark';
+
+      const image = document.createElement('img');
+      image.className = 'skill-logo';
+      image.dataset.logoKind = kind;
+      image.src = `assets/icons/${icon}`;
+      image.alt = '';
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      image.setAttribute('aria-hidden', 'true');
+
+      mark.append(image);
+
+      const label = document.createElement('span');
+      label.className = 'skill-name';
+      label.textContent = name;
+
+      content.append(mark, label);
+      item.append(content);
+      return item;
+    }));
+
+    section.append(heading, skills);
+    return section;
+  }));
+};
+
+// Public module initializer called by main.js.
+const initCapabilities = renderCapabilities;
+
+
+// CONTACT FORM FEEDBACK
+// Provides local validation and inline success feedback; submission is not sent to a server.
+const setupContactForm = () => {
+  const form = document.querySelector("[data-contact-form]");
+  const status = document.querySelector("[data-contact-form-status]");
+  if (!form || !status) return;
+
+  // Keep native validation UI while preventing a page reload in this static portfolio.
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    form.reset();
+    status.textContent = "✓ Viesti lähetetty. Kiitos viestistä!";
+    status.classList.add("is-success");
+  });
+
+  // Clear stale confirmation as soon as the visitor starts a new message.
+  form.addEventListener("input", () => {
+    if (!status.textContent) return;
+    status.textContent = "";
+    status.classList.remove("is-success");
+  });
+};
+
+
+// Public module initializer called by main.js.
+const initContact = setupContactForm;
+
+// MOBILE NAVIGATION
+// Owns the menu toggle, focus return, and breakpoint-specific visibility.
+const setupMobileNavigation = () => {
+  const header = document.querySelector(".site-header");
+  const toggle = document.querySelector("[data-nav-toggle]");
+  const navigation = document.querySelector("[data-primary-navigation]");
+  if (!toggle || !navigation) return;
+
+  const mobileQuery = window.matchMedia("(max-width: 47.9375rem)");
+  const toggleLabel = toggle.querySelector("[data-nav-toggle-label]");
+
+  // Centralize state changes so ARIA, visible menu state, and focus stay in sync.
+  const setOpen = (isOpen, { returnFocus = false } = {}) => {
+    navigation.hidden = !isOpen;
+    navigation.classList.toggle("is-open", isOpen);
+    if (header) header.classList.toggle("nav-open", isOpen);
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    if (toggleLabel) toggleLabel.textContent = isOpen ? "Sulje" : "Valikko";
+
+    if (returnFocus) {
+      toggle.focus();
+    }
+  };
+
+  // Reset mobile-only state whenever the viewport crosses the navigation breakpoint.
+  const syncMode = () => {
+    const isMobile = mobileQuery.matches;
+    toggle.hidden = !isMobile;
+    if (isMobile) {
+      setOpen(false);
+    } else {
+      navigation.hidden = false;
+      navigation.classList.remove("is-open");
+      if (header) header.classList.remove("nav-open");
+      toggle.setAttribute("aria-expanded", "false");
+      if (toggleLabel) toggleLabel.textContent = "Valikko";
+    }
+  };
+
+  // Toggle button click: toggle aria-expanded unconditionally when clicked
+  toggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const isOpen = toggle.getAttribute("aria-expanded") === "true";
+    setOpen(!isOpen);
+  });
+
+  // Close when clicking any navigation link
+  navigation.addEventListener("click", (event) => {
+    if (event.target.closest("a")) {
+      setOpen(false);
+    }
+  });
+
+  // Close when tapping/clicking anywhere outside the header
+  document.addEventListener("click", (event) => {
+    const isOpen = toggle.getAttribute("aria-expanded") === "true";
+    if (isOpen && header && !header.contains(event.target)) {
+      setOpen(false);
+    }
+  });
+
+  // Close when pressing Escape
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+      if (isOpen) {
+        event.preventDefault();
+        setOpen(false, { returnFocus: true });
+      }
+    }
+  });
+
+  mobileQuery.addEventListener("change", syncMode);
+  window.addEventListener("resize", () => {
+    if (!mobileQuery.matches && navigation.hidden) {
+      syncMode();
+    }
+  }, { passive: true });
+
+  syncMode();
+};
+
+// STICKY HEADER
+// Adds the scrolled style only after the hero has cleared the header.
+const setupStickyHeader = () => {
+  const header = document.querySelector(".site-header");
+  const hero = document.querySelector(".intro");
+  if (!header || !hero) return;
+
+  let currentState = null;
+  let heroEnd = 0;
+  let headerHeight = 0;
+  let syncFrame = 0;
+
+  // Avoid DOM updates until the sticky state actually changes.
+  const syncHeaderState = () => {
+    syncFrame = 0;
+    const isScrolled = window.scrollY > Math.max(headerHeight, heroEnd);
+    if (isScrolled === currentState) return;
+    currentState = isScrolled;
+    header.classList.toggle("is-scrolled", isScrolled);
+  };
+
+  // Recalculate boundaries when responsive content changes height.
+  const updateMetrics = () => {
+    headerHeight = header.offsetHeight;
+    heroEnd = hero.offsetTop + hero.offsetHeight - headerHeight;
+    syncHeaderState();
+  };
+
+  // Batch frequent scroll events into one animation-frame update.
+  const queueHeaderSync = () => {
+    if (syncFrame) return;
+    syncFrame = window.requestAnimationFrame(syncHeaderState);
+  };
+
+  window.addEventListener("scroll", queueHeaderSync, { passive: true });
+  window.addEventListener("resize", updateMetrics, { passive: true });
+
+  if ("ResizeObserver" in window) {
+    const resizeObserver = new ResizeObserver(updateMetrics);
+    resizeObserver.observe(header);
+    resizeObserver.observe(hero);
+  }
+
+  updateMetrics();
+};
+
+
+// BACK TO TOP ACTION
+// Smoothly scrolls to the top of the viewport when clicked.
+const setupBackToTop = () => {
+  const backToTop = document.querySelector("[data-back-to-top]");
+  if (!backToTop) return;
+  backToTop.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+};
+
+// Public module initializer called by main.js.
+const initNavigation = () => {
+  setupMobileNavigation();
+  setupStickyHeader();
+  setupBackToTop();
+};
+
+
 
 // PROJECT DATA
 // Single source of truth for project content and display order. Empty optional fields stay hidden.
@@ -552,6 +941,26 @@ const setupProjectReel = (visibleProjects) => {
 
 
 // Public module initializer called by main.js.
-export const initProjects = () => {
+const initProjects = () => {
   setupProjectReel(renderProjects());
 };
+
+
+let initialized = false;
+function bootstrap() {
+  if (initialized) return;
+  initialized = true;
+  initNavigation();
+  initHeroAnimation();
+  initCapabilities();
+  initProjects();
+  initScrollAnimations();
+  initContact();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootstrap);
+} else {
+  bootstrap();
+}
+})();
