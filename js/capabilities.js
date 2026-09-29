@@ -21,7 +21,6 @@ const capabilityGroups = [
       ['nodejs', 'Node.js', 'nodejs-original-wordmark.svg', 'wordmark'],
       ['express', 'Express', 'express-original-wordmark.svg', 'wordmark'],
       ['php', 'PHP', 'php-original.svg', 'wordmark'],
-      ['laravel', 'Laravel', 'laravel-original-wordmark.svg', 'wordmark'],
       ['supabase', 'Supabase', 'supabase-original-wordmark.svg', 'wordmark']
     ]
   },
@@ -30,7 +29,6 @@ const capabilityGroups = [
     title: 'Data ja kehitystyökalut',
     skills: [
       ['postgresql', 'PostgreSQL', 'postgresql-original-wordmark.svg', 'wordmark'],
-      ['mongodb', 'MongoDB', 'mongodb-original-wordmark.svg', 'wordmark'],
       ['prisma', 'Prisma', 'prisma-original-wordmark.svg', 'wordmark'],
       ['github', 'GitHub', 'github-original-wordmark.svg', 'wordmark'],
       ['postman', 'Postman', 'postman-original-wordmark.svg', 'wordmark']
