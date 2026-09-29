@@ -4,75 +4,40 @@ import { prefersReducedMotion, svgNamespace } from "./utils.js";
 // Single source of truth for project content and display order. Empty optional fields stay hidden.
 const projects = [
   {
-    id: "taloushallinto",
-    title: "Taloushallinto",
-    type: "Verkkosovellus",
-    status: null,
-    role: null,
-    purpose: "Verkkosovellus henkilökohtaisen talouden suunnitteluun ja taloustiedon tarkasteluun.",
-    description: null,
-    contribution: null,
-    technologies: ["HTML", "CSS", "JavaScript"],
-    image: "https://i.postimg.cc/qRHpHMyd/project-1.jpg",
-    alt: "Taloushallinnon hallintapaneeli",
-    demoUrl: "https://taloushalinto.onrender.com/",
-    githubUrl: "",
-    order: 3,
-    visible: true,
-  },
-  {
-    id: "kiinteisto",
-    title: "Kiinteistö",
-    type: "Kiinteistösivusto",
-    status: null,
-    role: null,
-    purpose: "Kiinteistösivusto asuntojen selaamiseen ja myynti-ilmoitusten esittelyyn.",
-    description: null,
-    contribution: null,
-    technologies: ["HTML", "CSS", "JavaScript"],
-    image: "https://i.postimg.cc/jSJVqYsq/project-3.jpg",
-    alt: "Kiinteistö-sivusto",
-    demoUrl: "https://kiinteist-sivusto.onrender.com/",
-    githubUrl: "",
-    order: 4,
-    visible: true,
-  },
-  {
-    id: "nanas-thai-food-menu",
-    title: "Nana’s Thai Food Menu",
-    type: "Ruokalistasivusto",
-    status: null,
-    role: null,
-    purpose: "Ravintolan ruokalistasivu, joka esittelee annokset ja niiden ainesosat allergiatietoa varten.",
-    description: null,
-    contribution: null,
-    technologies: ["HTML", "CSS", "JavaScript", "Photoshop", "AI"],
-    image: "assets/kuva/ruokalista.png",
-    alt: "Nana’s Thai Food -ruokalista",
-    demoUrl: "https://nanas-thai-food.onrender.com/menuPage.html",
-    githubUrl: "",
-    order: 2,
-    visible: true,
-  },
-  {
-    id: "nanas-thai-food-restaurant",
-    title: "Nana’s Thai Food Restaurant",
-    type: "Ravintolasivusto",
-    status: null,
-    role: null,
-    purpose: "Ravintolasivusto pöytävarauksen ja ruokalistan tarkasteluun.",
-    description: null,
-    contribution: null,
-    technologies: ["HTML", "CSS", "JavaScript"],
-    image: "assets/kuva/ravintola.png",
-    alt: "Nana’s Thai Food -ravintolasivusto",
-    demoUrl: "https://nanas-thai-food.onrender.com",
-    githubUrl: "",
+    id: "mini-x",
+    title: "Mini-X",
+    type: "Full Stack Web Application",
+
+    status: "Completed",
+    role: "Full Stack Developer",
+
+    purpose:
+      "Yhteisöllinen mikroblogi- ja Q&A-alusta, jossa käyttäjät voivat julkaista sisältöä, osallistua keskusteluihin ja personoida profiiliaan.",
+
+    description:
+      "Mini-X yhdistää mikrobloggaamisen, aihehuoneet, Q&A-kysymykset, parhaan vastauksen järjestelmän, profiilin personoinnin, musiikki-integraation ja reaaliaikaiset ilmoitukset.",
+
+    contribution:
+      "Suunnittelin ja toteutin sovelluksen frontendin, backendin, tietokannan, autentikoinnin, profiilin personoinnin, Q&A-toiminnot, ilmoitukset ja Apple Music / iTunes API -integraation.",
+
+    technologies: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "PHP",
+      "MySQL",
+    ],
+
+    image: "assets/kuva/minisome.png",
+    alt: "Mini-X social media web application",
+
+    demoUrl: "https://mini-x.infinityfree.io/",
+    githubUrl: "https://github.com/AlexNtrx/mini-X",
+
     order: 1,
     visible: true,
   },
 ];
-
 // PROJECT REEL CARDS
 // Creates the lightweight, clickable image card shown in the horizontal reel.
 const createProjectCard = (project, index) => {
@@ -107,7 +72,7 @@ const renderProjects = () => {
   if (!track) return;
 
   const visibleProjects = projects
-    .filter((project) => project.visible)
+    .filter((project) => project.visible) 
     .sort((first, second) => first.order - second.order);
 
   track.replaceChildren(...visibleProjects.map(createProjectCard));

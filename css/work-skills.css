@@ -101,8 +101,7 @@
 }
 .project-media img {
   width: 100%;
-  height: clamp(20rem, 40vw, 32rem);
-  object-fit: cover;
+  height: clamp(30rem, 50vw, 42rem);
 }
 /* PROJECT DETAIL AND TECHNOLOGY DIAGRAM */
 .project-detail {
