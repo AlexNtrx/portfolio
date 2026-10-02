@@ -394,8 +394,8 @@ const projects = [
     title: "Mini-X",
     type: "Full Stack Web Application",
 
-    status: "Completed",
-    role: "Full Stack Developer",
+    status: "Valmis",
+    role: "Full Stack Kehittäjä",
 
     purpose:
      "Mini X on yhteisöllinen sisältö- ja Q&A-alusta, joka yhdistää keskustelut, kysymykset ja vastaukset sekä käyttäjäprofiilien personoinnin. Käyttäjät voivat julkaista sisältöä, osallistua keskusteluihin, vastata kysymyksiin, valita parhaan vastauksen sekä muokata profiilinsa ulkoasua ja musiikkia.",
@@ -418,6 +418,36 @@ const projects = [
     githubUrl: "https://github.com/AlexNtrx/mini-X",
 
     order: 1,
+    visible: true,
+  },
+   {
+    id: "ilmo",
+    title: "Ilmo",
+    type: "Full Stack Web Application",
+
+    status: "Kehitteillä",
+    role: "Full Stack Kehittäjä",
+
+    purpose:
+     "",
+
+    contribution:
+      "",
+
+    technologies: [
+      "Next.js",
+      'Tailwind CSS',
+      "TypeScript",
+      "Prisma",
+      "PostgreSQL",
+    ],
+
+    image: "assets/kuva/ilmo.png",
+    alt: "Mini-X social media web application",
+
+    demoUrl: "https://mini-x.infinityfree.io/",
+    githubUrl: "https://github.com/AlexNtrx/mini-X",
+    order: 2,
     visible: true,
   },
 ];
