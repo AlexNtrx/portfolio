@@ -398,10 +398,7 @@ const projects = [
     role: "Full Stack Developer",
 
     purpose:
-      "Yhteisöllinen mikroblogi- ja Q&A-alusta, jossa käyttäjät voivat julkaista sisältöä, osallistua keskusteluihin ja personoida profiiliaan.",
-
-    description:
-      "Mini-X yhdistää mikrobloggaamisen, aihehuoneet, Q&A-kysymykset, parhaan vastauksen järjestelmän, profiilin personoinnin, musiikki-integraation ja reaaliaikaiset ilmoitukset.",
+     "Mini X on yhteisöllinen sisältö- ja Q&A-alusta, joka yhdistää keskustelut, kysymykset ja vastaukset sekä käyttäjäprofiilien personoinnin. Käyttäjät voivat julkaista sisältöä, osallistua keskusteluihin, vastata kysymyksiin, valita parhaan vastauksen sekä muokata profiilinsa ulkoasua ja musiikkia.",
 
     contribution:
       "Suunnittelin ja toteutin sovelluksen frontendin, backendin, tietokannan, autentikoinnin, profiilin personoinnin, Q&A-toiminnot, ilmoitukset ja Apple Music / iTunes API -integraation.",
@@ -763,7 +760,7 @@ const setupProjectReel = (visibleProjects) => {
       link.href = project.demoUrl;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      link.textContent = "Avaa demo";
+      link.textContent = "Avaa sivusto";
       link.dataset.detailAction = "demoUrl";
       detailActions.append(link);
     }
