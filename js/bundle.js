@@ -414,7 +414,7 @@ const projects = [
     image: "assets/kuva/minisome.png",
     alt: "Mini-X social media web application",
 
-    demoUrl: "https://mini-x.infinityfree.io/",
+    userdemoUrl: "https://mini-x.infinityfree.io/",
     githubUrl: "https://github.com/AlexNtrx/mini-X",
 
     order: 3,
@@ -444,9 +444,9 @@ const projects = [
 
     image: "assets/kuva/ilmo.png",
     alt: "Mini-X social media web application",
-
-    demoUrl: "https://mini-x.infinityfree.io/",
-    githubUrl: "https://github.com/AlexNtrx/mini-X",
+    demoUrl: "https://ilmo-palvelu.vercel.app/",
+    userdemoUrl: "https://ilmo-palvelu.vercel.app/report/pilot-wc-001",
+    githubUrl: "https://github.com/AlexNtrx/ilmo",
     order: 2,
     visible: true,
   },
@@ -474,9 +474,8 @@ const projects = [
 
     image: "assets/kuva/pos.png",
     alt: "Pos Ravintola",
-
-    demoUrl: "https://mini-x.infinityfree.io/",
-    githubUrl: "https://github.com/AlexNtrx/mini-X",
+    demoUrl: "https://pos-restaurant-nextjs.vercel.app",
+    githubUrl: "https://github.com/AlexNtrx/pos-restaurant-nextjs",
     order: 1,
     visible: true,
   },
@@ -820,7 +819,16 @@ const setupProjectReel = (visibleProjects) => {
       link.href = project.demoUrl;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      link.textContent = "Avaa sivusto";
+      link.textContent = "admin Sivusto";
+      link.dataset.detailAction = "demoUrl";
+      detailActions.append(link);
+    }
+     if (project.userdemoUrl) {
+      const link = document.createElement("a");
+      link.href = project.userdemoUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Käyttäjän sivusto";
       link.dataset.detailAction = "demoUrl";
       detailActions.append(link);
     }
