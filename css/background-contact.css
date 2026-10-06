@@ -137,6 +137,9 @@
 .contact-form-status.is-success {
   color: var(--text);
 }
+.contact-form-status.is-error {
+  color: #ff6b6b;
+}
 .contact-list {
   grid-area: details;
   display: grid;
