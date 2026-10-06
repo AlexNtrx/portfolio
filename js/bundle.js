@@ -417,7 +417,7 @@ const projects = [
     demoUrl: "https://mini-x.infinityfree.io/",
     githubUrl: "https://github.com/AlexNtrx/mini-X",
 
-    order: 1,
+    order: 3,
     visible: true,
   },
    {
@@ -429,10 +429,10 @@ const projects = [
     role: "Full Stack Kehittäjä",
 
     purpose:
-     "",
+     "QR-pohjainen ongelmien ilmoitusjärjestelmä kauppojen ja julkisten tilojen WC-tiloihin. Asiakas voi ilmoittaa esimerkiksi siivoustarpeesta, loppuneista tarvikkeista tai turvallisuusriskistä nopeasti QR-koodin avulla ilman kirjautumista. Henkilökunta näkee ilmoitukset yhdessä näkymässä, voi priorisoida kiireelliset ongelmat ja reagoida niihin nopeasti. Näin tiloja ei tarvitse tarkistaa jatkuvasti ilman syytä.",
 
     contribution:
-      "",
+      "Suunnittelin ja toteutin sovelluksen frontendin, backendin, tietokannan, autentikoinnin, QR-pohjaisen ilmoitusprosessin, ilmoitusten yhdistämisen ja priorisoinnin sekä henkilökunnan hallintanäkymän.",
 
     technologies: [
       "Next.js",
@@ -448,6 +448,36 @@ const projects = [
     demoUrl: "https://mini-x.infinityfree.io/",
     githubUrl: "https://github.com/AlexNtrx/mini-X",
     order: 2,
+    visible: true,
+  },
+   {
+    id: "posravintola",
+    title: "Pos-Ravintola",
+    type: "Full Stack Web Application",
+
+    status: "Valmis v2.0.0",
+    role: "Full Stack Kehittäjä",
+
+    purpose:
+     "Ravintola POS on ravintolan tilausten ja myynnin hallintajärjestelmä, joka yhdistää kassan, tarjoilijat, keittiön ja QR-pöytätilaukset samaan työnkulkuun. Asiakas voi tilata suoraan pöydästä QR-koodin avulla, ja henkilökunta voi seurata tilausten etenemistä kassalta keittiöön ja valmiiksi asti.",
+
+    contribution:
+      "Suunnittelin ja toteutin sovelluksen frontendin, backendin, tietokannan ja autentikoinnin sekä kassa-, tarjoilija- ja keittiönäkymät, QR-tilaamisen, tilausten seurannan, ruokalistan hallinnan, kuitti- ja tilaushistorian, raportoinnin ja käyttäjäroolit.",
+
+    technologies: [
+      "Next.js",
+      'Tailwind CSS',
+      "TypeScript",
+      "Prisma",
+      "PostgreSQL",
+    ],
+
+    image: "assets/kuva/pos.png",
+    alt: "Pos Ravintola",
+
+    demoUrl: "https://mini-x.infinityfree.io/",
+    githubUrl: "https://github.com/AlexNtrx/mini-X",
+    order: 1,
     visible: true,
   },
 ];
